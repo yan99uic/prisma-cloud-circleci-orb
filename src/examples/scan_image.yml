@@ -1,0 +1,28 @@
+description: >
+  Trigger container image (nginx) scan with Prisma Cloud Compute
+# Provide a use-case based example for using this orb.
+# Everything in the `usage` section will be displayed in the orb registry.
+# Comments are not retained.
+usage:
+  version: 2.1
+  orbs:
+    pcs: prisma_cloud/devops_security@2.0.0
+  jobs:
+    docker_build:
+      executor: scan/compute
+      steps:
+        - checkout
+        - run: 'docker pull nginx:latest'
+
+  workflows:
+    scan:
+      jobs:
+        - docker_build:
+        - pcs/scan_image:
+          requires:
+            - docker_build
+          prisma_cloud_compute_url: <prisma cloud compute console url>  # Default env variable: PC_COMPUTE_URL
+          prisma_cloud_compute_user: <prisma cloud compute username>  # Default env variable: PC_COMPUTE_USER
+          prisma_cloud_compute_pass: PC_COMPUTE_PASS # Default env variable: PC_COMPUTE_PASS
+          image: 'nginx:latest'
+

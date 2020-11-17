@@ -1,0 +1,46 @@
+description: >
+  Pack IaC templates and send to Prima Cloud for evaluation
+# What will this job do?
+# Descriptions should be short, simple, and clear.
+
+executor: default
+
+parameters:
+  access_key:
+    description: Prisma Cloud Access Key
+    type: string
+    default: $prisma_cloud_access_key
+  secret_key:
+    description: Prisma Cloud Secret Key
+    type: env_var_name
+    default: prisma_cloud_secret_key
+  prisma_cloud_api_url:
+    description: Prisma Cloud Server Url
+    type: string
+    default: $prisma_cloud_api_url
+  templates_directory_path:
+    description: Directory path where IaC templates are stored.
+    type: string
+    default: .
+  failure_criteria_high_severity:
+    description: Provide failure threshold for high severity security issues.
+    type: integer
+    default: 1
+  failure_criteria_medium_severity:
+    description: Provide failure threshold for medium severity security issues.
+    type: integer
+    default: 1
+  failure_criteria_low_severity:
+    description: Provide failure threshold for low severity security issues.
+    type: integer
+    default: 1
+  failure_criteria_operator:
+    description: Provide operator for high, medium, low severity failure thresholds.
+    type: string
+    default: or
+  tags:
+    description: Provide the Tags for the repo.
+    type: string
+    default: ""
+steps:
+  - checkout
