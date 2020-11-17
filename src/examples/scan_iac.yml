@@ -1,0 +1,25 @@
+description: >
+  Trigger templates scan with Prima Cloud Shift Left security
+# Provide a use-case based example for using this orb.
+# Everything in the `usage` section will be displayed in the orb registry.
+# Comments are not retained.
+usage:
+  version: 2.1
+  orbs:
+    pcs: prisma_cloud/devops_security@2.0.0
+
+  workflows:
+    scan:
+      jobs:
+        - pcs/scan_iac:
+          # Get Prisma Cloud API URL here: https://api.docs.prismacloud.io
+          prisma_cloud_api_url: <prisma cloud api url>    # Default env variable: PC_API_URL
+          access_key: <prisma cloud access key>   # Default env variable: PC_ACCESS_KEY
+          secret_key: PC_SECRET_KEY  # Default env variable: PC_SECRET_KEY
+          failure_criteria_high_severity: 1
+          failure_criteria_medium_severity: 2
+          failure_criteria_low_severity: 3
+          failure_criteria_operator: and
+          tags: env:development, team:devOps
+
+
